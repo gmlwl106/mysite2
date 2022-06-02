@@ -23,9 +23,18 @@ nocache;
 
 --insert
 insert into users
-values (seq_users_no.nextval, 'hee', '0000', '박희지', '여자');
+values (seq_users_no.nextval, 'hee', '0000', '박희지', 'female');
 
 
 --users 출력
 select *
 from users;
+
+select no
+        ,id
+        ,password
+        ,name
+        ,gender
+from users
+where id = 'hee'
+and password = '0000';
