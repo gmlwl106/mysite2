@@ -27,11 +27,9 @@ public class MainController extends HttpServlet {
 		
 		//포워드 (index 페이지)
 		WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp");
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
