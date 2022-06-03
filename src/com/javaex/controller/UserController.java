@@ -138,20 +138,25 @@ public class UserController extends HttpServlet {
 		} else if("modify".equals(action)) { //회원정보 수정
 			System.out.println("UserContoller->modify");
 			
-			String uid = request.getParameter("id");
+			//세션에서 no 가져옴
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
+			
+			//파라미터 가져옴
+			String id = request.getParameter("id");
 			String password = request.getParameter("password");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
 			
 			
 			//회원정보 수정하고 세션정보 업데이트
-			UserVo userVo = new UserVo(uid, password, name, gender);
+			UserVo userVo = new UserVo(no, id, password, name, gender);
 			UserDao userDao = new UserDao();
-			UserVo authUser = userDao.updateUser(userVo);
+			int count = userDao.updateUser(userVo);
 			
-			//세션
-			HttpSession session = request.getSession();
-			session.setAttribute("authUser", authUser); //세션에 key로 저장
+			authUser = userDao.getUser(userVo);
+			session.setAttribute("authUser", authUser);
 			
 			//메인 리다이렉트
 			WebUtil.redirect(request, response, "/mysite2/main");

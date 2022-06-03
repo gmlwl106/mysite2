@@ -177,8 +177,8 @@ public class UserDao {
 	
 	
 	//사용자 정보 수정
-	public UserVo updateUser(UserVo userVo) {
-		UserVo authUser = null;
+	public int updateUser(UserVo userVo) {
+		int count = -1;
 		getConnection();
 
 		try {
@@ -199,17 +199,16 @@ public class UserDao {
 			pstmt.setString(4, userVo.getId());
 			
 
-			int count = pstmt.executeUpdate(); // 쿼리문 실행
+			count = pstmt.executeUpdate(); // 쿼리문 실행
 
 			// 4.결과처리
 			System.out.println("[" + count + "건 수정 되었습니다.]");
-			authUser = getUser(userVo);
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 		close();
-		return authUser;
+		return count;
 	}
 	
 	
