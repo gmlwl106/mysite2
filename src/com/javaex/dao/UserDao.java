@@ -55,7 +55,7 @@ public class UserDao {
 	
 	
 	//회원가입 -> 회원정보 저장
-	public int userInsert(UserVo userVo) {
+	public int insertUser(UserVo userVo) {
 		int count = 0;
 		getConnection();
 
@@ -114,10 +114,12 @@ public class UserDao {
 			// 4.결과처리
 			while (rs.next()) {
 				int no = rs.getInt("no");
+				String uid = rs.getString("id");
 				String name = rs.getString("name");
 				
 				authUser = new UserVo();
 				authUser.setNo(no);
+				authUser.setId(uid);
 				authUser.setName(name);
 				
 				//필요한 값만 세션에 저장하기 위해 no, name을 받아옴
@@ -127,6 +129,44 @@ public class UserDao {
 			System.out.println("error:" + e);
 		}
 
+		close();
+		return authUser;
+	}
+	
+	
+	
+	//사용자 정보 수정
+	public UserVo updateUser(UserVo userVo) {
+		UserVo authUser = null;
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+			query += " update users ";
+			query += " set password = ?, ";
+			query += "     name = ?, ";
+			query += "     gender = ? ";
+			query += " where id = ? ";
+
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+
+			pstmt.setString(1, userVo.getPassword());
+			pstmt.setString(2, userVo.getName());
+			pstmt.setString(3, userVo.getGender());
+			pstmt.setString(4, userVo.getId());
+			
+
+			int count = pstmt.executeUpdate(); // 쿼리문 실행
+
+			// 4.결과처리
+			System.out.println("[" + count + "건 수정 되었습니다.]");
+			authUser = getUser(userVo);
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
 		close();
 		return authUser;
 	}

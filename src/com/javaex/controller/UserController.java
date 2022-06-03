@@ -32,6 +32,7 @@ public class UserController extends HttpServlet {
 			WebUtil.forward(request, response, "/WEB-INF/views/user/joinForm.jsp");
 			
 			
+			
 		} else if("join".equals(action)) { //회원가입->insert
 			System.out.println("UserContoller->join");
 			
@@ -42,11 +43,12 @@ public class UserController extends HttpServlet {
 			
 			UserVo userVo = new UserVo(id, password, name, gender);
 			UserDao userDao = new UserDao();
-			int count = userDao.userInsert(userVo);
+			int count = userDao.insertUser(userVo);
 
 			if(count > 0) {
 				WebUtil.redirect(request, response, "./user?action=joinOk");
 			}
+			
 			
 			
 
@@ -58,11 +60,15 @@ public class UserController extends HttpServlet {
 			
 			
 			
+			
 		} else if("loginForm".equals(action)) { //로그인 폼
 			System.out.println("UserContoller->loginForm");
 			
 			//회원가입 폼 포워드
 			WebUtil.forward(request, response, "/WEB-INF/views/user/loginForm.jsp");
+			
+			
+			
 			
 			
 		} else if("login".equals(action)) { //로그인
@@ -80,6 +86,8 @@ public class UserController extends HttpServlet {
 
 			if(authUser == null) {
 				System.out.println("로그인 실패");
+				//메인 리다이렉트
+				WebUtil.redirect(request, response, "/mysite2/main");
 			} else {
 				System.out.println("로그인 성공");
 				
@@ -93,6 +101,7 @@ public class UserController extends HttpServlet {
 			
 			
 			
+			
 		} else if("logout".equals(action)) { //로그아웃
 			System.out.println("UserContoller->logout");
 			
@@ -103,6 +112,41 @@ public class UserController extends HttpServlet {
 			
 			//메인 리다이렉트
 			WebUtil.redirect(request, response, "/mysite2/main");
+			
+			
+			
+			
+			
+		} else if("modifyForm".equals(action)) { //회원정보 수정 폼
+			System.out.println("UserContoller->modifyForm");
+			
+			//회원정보 수정 폼 포워드
+			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
+			
+			
+			
+			
+		} else if("modify".equals(action)) {
+			System.out.println("UserContoller->modify");
+			
+			String uid = request.getParameter("id");
+			String password = request.getParameter("password");
+			String name = request.getParameter("name");
+			String gender = request.getParameter("gender");
+			
+			
+			
+			UserVo userVo = new UserVo(uid, password, name, gender);
+			UserDao userDao = new UserDao();
+			UserVo authUser = userDao.updateUser(userVo);
+			
+			//세션
+			HttpSession session = request.getSession();
+			session.setAttribute("authUser", authUser); //세션에 key로 저장
+			
+			//메인 리다이렉트
+			WebUtil.redirect(request, response, "/mysite2/main");
+			
 		}
 	}
 
