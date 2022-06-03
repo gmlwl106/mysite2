@@ -87,7 +87,7 @@ public class UserDao {
 	}
 	
 	
-	//사용자 정보 가져오기 (로그인시 사용)
+	//사용자 정보 가져오기 (로그인시 사용) -> no, name
 	public UserVo getUser(UserVo userVo) {
 		UserVo authUser = null;
 		getConnection();
@@ -133,8 +133,8 @@ public class UserDao {
 		return authUser;
 	}
 	
-	
-	public UserVo getUserInfo(int no) {
+	//사용자 전체 정보 가져오기 -> no, id, password, name, gender
+	public UserVo getUser(int no) {
 		UserVo userVo = null;
 		getConnection();
 		
@@ -164,7 +164,6 @@ public class UserDao {
 				
 				userVo = new UserVo(no, uid, password, name, gender);
 				
-				//필요한 값만 세션에 저장하기 위해 no, name을 받아옴
 			}
 
 		} catch (SQLException e) {

@@ -120,14 +120,16 @@ public class UserController extends HttpServlet {
 		} else if("modifyForm".equals(action)) { //회원정보 수정 폼
 			System.out.println("UserContoller->modifyForm");
 			
-			int no = Integer.parseInt(request.getParameter("no"));
+			//세션에서 authUser를 가져와서 authUser의 no를 가지고 userVo를 만듬
+			//파라미터로 no를 넘겨받는 것은 사용자가 수정할 수 있기 때문에 위험
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo) session.getAttribute("authUser");
 			
 			UserDao userDao = new UserDao();
-			UserVo userVo = userDao.getUserInfo(no);
+			UserVo userVo = userDao.getUser(authUser.getNo());
+			
+			//request의 attribute에 userVo를 넣어서 포워딩
 			request.setAttribute("userVo", userVo);
-			
-			
-			//회원정보 수정 폼 포워드
 			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
 			
 			
@@ -142,6 +144,7 @@ public class UserController extends HttpServlet {
 			String gender = request.getParameter("gender");
 			
 			
+			//회원정보 수정하고 세션정보 업데이트
 			UserVo userVo = new UserVo(uid, password, name, gender);
 			UserDao userDao = new UserDao();
 			UserVo authUser = userDao.updateUser(userVo);
