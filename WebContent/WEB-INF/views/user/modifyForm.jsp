@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="com.javaex.vo.UserVo" %>
+<%@ page import="com.javaex.dao.UserDao" %>
 
 <%
 	UserVo authUser = (UserVo)session.getAttribute("authUser");
-
+	UserDao userDao = new UserDao();
+	authUser = userDao.getUserInfo(authUser);
 %>
 
 <!DOCTYPE html>
@@ -93,13 +95,20 @@
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
+								
+								<% if(authUser.getPassword() == null) { %>
+									<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
+								<% } else { %>
+									<input type="text" id="input-pass" name="password" value="<%=authUser.getPassword() %>">
+								<% } %>
 							</div>
 	
 							<!-- 이름 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
+								<% if(authUser.getName() == null) { %>
 								<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
+								<% } %>
 							</div>
 	
 							<!-- 성별 -->

@@ -135,6 +135,53 @@ public class UserDao {
 	
 	
 	
+	//사용자 전체 정보 가져오기 (수정시 사용)
+		public UserVo getUserInfo(UserVo userVo) {
+			UserVo authUser = null;
+			getConnection();
+			
+			try {
+
+				// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
+				String query = "";
+				query += " select no ";
+				query += "         ,id ";
+				query += "         ,password ";
+				query += "         ,name ";
+				query += "         ,gender ";
+				query += " from users ";
+				query += " where no = ? ";
+				query += " and id = ? ";
+
+				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+				pstmt.setInt(1, userVo.getNo());
+				pstmt.setString(2, userVo.getId());
+
+				rs = pstmt.executeQuery();
+
+				// 4.결과처리
+				while (rs.next()) {
+					int no = rs.getInt("no");
+					String uid = rs.getString("id");
+					String password = rs.getString("password");
+					String name = rs.getString("name");
+					String gender = rs.getString("gender");
+					
+					authUser = new UserVo(no, uid, password, name, gender);
+					
+					//필요한 값만 세션에 저장하기 위해 no, name을 받아옴
+				}
+
+			} catch (SQLException e) {
+				System.out.println("error:" + e);
+			}
+
+			close();
+			return authUser;
+		}
+	
+	
+	
 	//사용자 정보 수정
 	public UserVo updateUser(UserVo userVo) {
 		UserVo authUser = null;
