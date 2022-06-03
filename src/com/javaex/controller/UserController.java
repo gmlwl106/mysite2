@@ -120,20 +120,26 @@ public class UserController extends HttpServlet {
 		} else if("modifyForm".equals(action)) { //회원정보 수정 폼
 			System.out.println("UserContoller->modifyForm");
 			
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			UserDao userDao = new UserDao();
+			UserVo userVo = userDao.getUserInfo(no);
+			request.setAttribute("userVo", userVo);
+			
+			
 			//회원정보 수정 폼 포워드
 			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyForm.jsp");
 			
 			
 			
 			
-		} else if("modify".equals(action)) {
+		} else if("modify".equals(action)) { //회원정보 수정
 			System.out.println("UserContoller->modify");
 			
 			String uid = request.getParameter("id");
 			String password = request.getParameter("password");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
-			
 			
 			
 			UserVo userVo = new UserVo(uid, password, name, gender);

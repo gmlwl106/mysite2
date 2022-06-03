@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ page import="com.javaex.vo.UserVo" %>
-<%@ page import="com.javaex.dao.UserDao" %>
 
 <%
 	UserVo authUser = (UserVo)session.getAttribute("authUser");
-	UserDao userDao = new UserDao();
-	authUser = userDao.getUserInfo(authUser);
+
+	UserVo userVo = (UserVo) request.getAttribute("userVo");
+
 %>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@
 				<ul>
 					<li><%=authUser.getName() %> 님 안녕하세요คʕ•ﻌ•ʔค</li>
 					<li><a href="/mysite2/user?action=logout" class="btn_s">로그아웃</a></li>
-					<li><a href="/mysite2/user?action=modifyForm" class="btn_s">회원정보수정</a></li>
+					<li><a href="/mysite2/user?action=modifyForm&no=<%=authUser.getNo() %>" class="btn_s">회원정보수정</a></li>
 				</ul>
 				
 			<% } %>
@@ -88,26 +88,28 @@
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<span class="text-large bold"><%=authUser.getId() %></span>
-								<input type="hidden" name="id" value="<%=authUser.getId() %>">
+								<span class="text-large bold"><%=userVo.getId() %></span>
+								<input type="hidden" name="id" value="<%=userVo.getId() %>">
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
 								
-								<% if(authUser.getPassword() == null) { %>
+								<% if(userVo.getPassword() == null) { %>
 									<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
 								<% } else { %>
-									<input type="text" id="input-pass" name="password" value="<%=authUser.getPassword() %>">
+									<input type="text" id="input-pass" name="password" value="<%=userVo.getPassword() %>">
 								<% } %>
 							</div>
 	
 							<!-- 이름 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
-								<% if(authUser.getName() == null) { %>
-								<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
+								<% if(userVo.getName() == null) { %>
+									<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
+								<% } else { %>
+									<input type="text" id="input-name" name="name" value="<%=userVo.getName() %>">
 								<% } %>
 							</div>
 	
@@ -115,11 +117,25 @@
 							<div class="form-group">
 								<span class="form-text">성별</span> 
 							
-								<label for="rdo-male">남</label> 
-								<input type="radio" id="rdo-male" name="gender" value="male" > 
-								
-								<label for="rdo-female">여</label> 
-								<input type="radio" id="rdo-female" name="gender" value="female" > 
+								<% if(userVo.getGender() == null) { %>
+									<label for="rdo-male">남</label> 
+									<input type="radio" id="rdo-male" name="gender" value="male" > 
+									
+									<label for="rdo-female">여</label> 
+									<input type="radio" id="rdo-female" name="gender" value="female" > 
+								<% } else if(userVo.getGender().equals("male")) { %>
+									<label for="rdo-male">남</label> 
+									<input type="radio" id="rdo-male" name="gender" value="male" checked> 
+									
+									<label for="rdo-female">여</label> 
+									<input type="radio" id="rdo-female" name="gender" value="female" >
+								<% } else if(userVo.getGender().equals("female")) { %>
+									<label for="rdo-male">남</label> 
+									<input type="radio" id="rdo-male" name="gender" value="male" > 
+									
+									<label for="rdo-female">여</label> 
+									<input type="radio" id="rdo-female" name="gender" value="female" checked>
+								<% } %>
 	
 							</div>
 	
