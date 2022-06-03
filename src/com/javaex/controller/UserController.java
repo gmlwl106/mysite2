@@ -142,9 +142,9 @@ public class UserController extends HttpServlet {
 			HttpSession session = request.getSession();
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
 			int no = authUser.getNo();
+			String id = authUser.getId();
 			
 			//파라미터 가져옴
-			String id = request.getParameter("id");
 			String password = request.getParameter("password");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");

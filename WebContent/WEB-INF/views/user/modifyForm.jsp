@@ -118,22 +118,22 @@
 							
 								<% if(userVo.getGender() == null) { %>
 									<label for="rdo-male">남</label> 
-									<input type="radio" id="rdo-male" name="gender" value="male" > 
+									<input type="radio" id="rdo-male" name="gender" value="male"> 
 									
 									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female" > 
+									<input type="radio" id="rdo-female" name="gender" value="female"> 
 								<% } else if(userVo.getGender().equals("male")) { %>
 									<label for="rdo-male">남</label> 
 									<input type="radio" id="rdo-male" name="gender" value="male" checked> 
 									
 									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female" >
+									<input type="radio" id="rdo-female" name="gender" value="female">
 								<% } else if(userVo.getGender().equals("female")) { %>
 									<label for="rdo-male">남</label> 
-									<input type="radio" id="rdo-male" name="gender" value="male" > 
+									<input type="radio" id="rdo-male" name="gender" value="male"> 
 									
 									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female" checked>
+									<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
 								<% } %>
 	
 							</div>

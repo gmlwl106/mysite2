@@ -189,14 +189,14 @@ public class UserDao {
 			query += " set password = ?, ";
 			query += "     name = ?, ";
 			query += "     gender = ? ";
-			query += " where id = ? ";
+			query += " where no = ? ";
 
 			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 
 			pstmt.setString(1, userVo.getPassword());
 			pstmt.setString(2, userVo.getName());
 			pstmt.setString(3, userVo.getGender());
-			pstmt.setString(4, userVo.getId());
+			pstmt.setInt(4, userVo.getNo());
 			
 
 			count = pstmt.executeUpdate(); // 쿼리문 실행
