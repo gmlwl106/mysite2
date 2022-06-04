@@ -161,6 +161,9 @@ public class UserController extends HttpServlet {
 			//메인 리다이렉트
 			WebUtil.redirect(request, response, "/mysite2/main");
 			
+		}  else {
+			System.out.println("action 파라미터 없음");
+			WebUtil.redirect(request, response, "/mysite2/main");
 		}
 	}
 

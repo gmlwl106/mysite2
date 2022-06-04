@@ -14,7 +14,7 @@ import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestbookVo;
 
 
-@WebServlet("/gb")
+@WebServlet("/gbc")
 public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -47,6 +47,61 @@ public class GuestbookController extends HttpServlet {
 			
 			
 			
+		} else if("add".equals(action)) { //방명록 추가
+			System.out.println("guestbookController->add");
+			
+			//파라미터 가져오기
+			String name = request.getParameter("name");
+			String password = request.getParameter("pass");
+			String content = request.getParameter("content");
+			content = content.replace("\r\n","<br>"); //textarea 줄바꿈을 저장하는 코드
+			String date = request.getParameter("reg_date");
+			
+			//guestInsert로 DB에 추가
+			GuestbookDao gbDao = new GuestbookDao();
+			int count  = gbDao.guestInsert(new GuestbookVo(name, password, content, date));
+			System.out.println(count);
+			
+			//리다이렉트 list
+			WebUtil.redirect(request, response, "./gbc?action=addListForm");
+			
+			
+			
+		} else if("deleteForm".equals(action)) { //방명록 삭제폼
+			System.out.println("guestbookController->deleteForm");
+			
+			//파라미터 가져오기
+			int delNo = Integer.parseInt(request.getParameter("del_no"));
+			
+			GuestbookVo gbVo = new GuestbookVo();
+			gbVo.setNo(delNo);
+			
+			request.setAttribute("gbVo", gbVo);
+			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/deleteForm.jsp");
+			
+			
+			
+		} else if("delete".equals(action)) { //방명록 삭제
+			System.out.println("guestbookController->delete");
+			
+			//파라미터 가져오기
+			int delNo = Integer.parseInt(request.getParameter("del_no"));
+			String delPw = request.getParameter("del_pw");
+			
+			
+			GuestbookDao gbDao = new GuestbookDao();
+			
+			gbDao.guestDelete(delNo, delPw);
+			
+			//리다이렉트 list
+			WebUtil.redirect(request, response, "./gbc?action=addListForm");
+			
+			
+			
+			
+		} else {
+			System.out.println("action 파라미터 없음");
+			WebUtil.redirect(request, response, "./gbc?action=addListForm");
 		}
 	
 	}
