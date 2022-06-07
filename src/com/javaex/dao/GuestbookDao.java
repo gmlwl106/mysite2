@@ -73,6 +73,7 @@ public class GuestbookDao {
 			query += "         ,content ";
 			query += "         ,to_char(reg_date, 'YYYY-MM-DD HH:MI:SS') \"reg_date\" ";
 			query += " from guestbook ";
+			query += " order by no ";
 
 
 			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
