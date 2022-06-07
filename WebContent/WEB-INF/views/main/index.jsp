@@ -71,10 +71,8 @@
 		<!-- //container -->
 		
 		
-		<div id="footer">
-			Copyright ⓒ 2022 박희지. All right reserved
-		</div>
-		<!-- //footer -->
+		<!-- footer -->
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
 
 	</div>
 	<!-- //wrap -->
