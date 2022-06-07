@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%@ page import="com.javaex.vo.UserVo" %>
-
-<%
-	UserVo userVo = (UserVo) request.getAttribute("userVo");
-%>
 
 <!DOCTYPE html>
 <html>
@@ -19,17 +15,10 @@
 	<div id="wrap">
 
 		<!-- header -->
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="/mysite2/gbc?action=addListForm">방명록</a></li>
-			</ul>
-		</div>
-		<!-- //nav -->
+		<!-- nav -->
+		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -66,55 +55,60 @@
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<span class="text-large bold"><%=userVo.getId() %></span>
-								<input type="hidden" name="id" value="<%=userVo.getId() %>">
+								<span class="text-large bold">${userVo.id }</span>
+								<input type="hidden" name="id" value="${userVo.id }">
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
 								
-								<% if(userVo.getPassword() == null) { %>
+								<c:if test="${empty userVo.password }">
 									<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
-								<% } else { %>
-									<input type="text" id="input-pass" name="password" value="<%=userVo.getPassword() %>">
-								<% } %>
+								</c:if>
+								<c:if test="${not empty userVo.password }">	
+									<input type="text" id="input-pass" name="password" value="${userVo.password }">
+								</c:if>
 							</div>
 	
 							<!-- 이름 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
-								<% if(userVo.getName() == null) { %>
+								<c:if test="${empty userVo.name }">
 									<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
-								<% } else { %>
-									<input type="text" id="input-name" name="name" value="<%=userVo.getName() %>">
-								<% } %>
+								</c:if>
+								<c:if test="${not empty userVo.name }">
+									<input type="text" id="input-name" name="name" value="${userVo.name }">
+								</c:if>
 							</div>
 	
 							<!-- 성별 -->
 							<div class="form-group">
 								<span class="form-text">성별</span> 
 							
-								<% if(userVo.getGender() == null) { %>
-									<label for="rdo-male">남</label> 
-									<input type="radio" id="rdo-male" name="gender" value="male"> 
-									
-									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female"> 
-								<% } else if(userVo.getGender().equals("male")) { %>
-									<label for="rdo-male">남</label> 
-									<input type="radio" id="rdo-male" name="gender" value="male" checked> 
-									
-									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female">
-								<% } else if(userVo.getGender().equals("female")) { %>
-									<label for="rdo-male">남</label> 
-									<input type="radio" id="rdo-male" name="gender" value="male"> 
-									
-									<label for="rdo-female">여</label> 
-									<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
-								<% } %>
-	
+								<c:choose>
+									<c:when test="${userVo.gender eq 'male'}">
+										<label for="rdo-male">남</label> 
+										<input type="radio" id="rdo-male" name="gender" value="male" checked> 
+										
+										<label for="rdo-female">여</label> 
+										<input type="radio" id="rdo-female" name="gender" value="female">
+									</c:when>
+									<c:when test="${userVo.gender eq 'female'}">
+										<label for="rdo-male">남</label> 
+										<input type="radio" id="rdo-male" name="gender" value="male"> 
+										
+										<label for="rdo-female">여</label> 
+										<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<label for="rdo-male">남</label> 
+										<input type="radio" id="rdo-male" name="gender" value="male"> 
+										
+										<label for="rdo-female">여</label> 
+										<input type="radio" id="rdo-female" name="gender" value="female"> 
+									</c:otherwise>
+								</c:choose>
 							</div>
 	
 							<!-- 버튼영역 -->
@@ -136,7 +130,7 @@
 		<!-- //container  -->
 
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		
 	</div>
 	<!-- //wrap -->

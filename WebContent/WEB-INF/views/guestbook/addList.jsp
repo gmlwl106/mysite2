@@ -1,19 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%@ page import="java.util.List" %>
-<%@ page import="com.javaex.vo.GuestbookVo" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<!-- 현재 날짜와 시간 -->
+<c:set var="now" value="<%=new java.util.Date() %>" />
+<c:set var="regDate"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
 
-<%
-	//guestbook List
-	List<GuestbookVo> gbList = (List<GuestbookVo>) request.getAttribute("gbList");
-	
-	//날짜형식 변경
-	Date date = new Date();
-   	SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-   	String regDate = simpleDate.format(date);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -29,17 +21,10 @@
 	<div id="wrap">
 
 		<!-- header -->
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="/mysite2/gbc?action=addListForm">방명록</a></li>
-			</ul>
-		</div>
-		<!-- //nav -->
+		<!-- nav -->
+		<c:import url="/WEB-INF/views/includes/nav.jsp"></c:import>
 	
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -91,13 +76,13 @@
 							
 						</table>
 						<!-- //guestWrite -->
-						<input type="hidden" name="reg_date" value="<%=regDate%>">
+						<input type="hidden" name="reg_date" value="${regDate }">
 						<input type="hidden" name="action" value="add">
 						
 					</form>	
 					
 					
-					<% for(GuestbookVo gb : gbList) { %>
+					<c:forEach items="${gbList }" var="gbVo">
 						<table class="guestRead">
 							<colgroup>
 								<col style="width: 10%;">
@@ -106,16 +91,16 @@
 								<col style="width: 10%;">
 							</colgroup>
 							<tr>
-								<td><%=gb.getNo() %></td>
-								<td><%=gb.getName() %></td>
-								<td><%=gb.getDate() %></td>
-								<td><a href="/mysite2/gbc?action=deleteForm&del_no=<%=gb.getNo()%>">[삭제]</a></td>
+								<td>${gbVo.no }</td>
+								<td>${gbVo.name }</td>
+								<td>${gbVo.date }</td>
+								<td><a href="/mysite2/gbc?action=deleteForm&del_no=${gbVo.no }">[삭제]</a></td>
 							</tr>
 							<tr>
-								<td colspan=4 class="text-left"><%=gb.getContent() %></td>
+								<td colspan=4 class="text-left">${gbVo.content }</td>
 							</tr>
 						</table>
-					<% } %>
+					</c:forEach>
 					<!-- //guestRead -->
 					
 				</div>
@@ -127,7 +112,7 @@
 		<!-- //container  -->
 
 		<!-- footer -->
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	</div>
 	<!-- //wrap -->
 
