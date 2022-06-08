@@ -25,9 +25,13 @@ public class BoardVo {
 		this.user_no = user_no;
 		this.name = name;
 	}
-
-
-
+	//borderWrite에서 사용
+	public BoardVo(String title, String content, int user_no) {
+		this.title = title;
+		this.content = content;
+		this.user_no = user_no;
+	}
+	
 	
 	//메소드 gs
 	public int getNo() {

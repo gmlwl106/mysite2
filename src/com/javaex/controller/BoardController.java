@@ -40,7 +40,7 @@ public class BoardController extends HttpServlet {
 			
 			
 			
-		} else if("writeForm".equals(action)) { //글쓰기 폼
+		} else if("writeForm".equals(action)) { //게시판 리스트
 			System.out.println("boardController->writeForm");
 			
 			//writeForm으로 리다이렉트
@@ -48,7 +48,25 @@ public class BoardController extends HttpServlet {
 			
 			
 			
-		} else if("delete".equals(action)) { //글 삭제
+		} else if("write".equals(action)) { //글 작성
+			System.out.println("boardController->write");
+			
+			int userNo = Integer.parseInt(request.getParameter("user_no"));
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			content = content.replace("\r\n","<br>"); //textarea 줄바꿈을 저장하는 코드
+			
+			//boardWrite로 DB에 추가
+			BoardDao boardDao = new BoardDao();
+			boardDao.boardWrite(new BoardVo(title, content, userNo));
+			
+			//list로 리다이렉트
+			WebUtil.redirect(request, response, "./board?action=list");
+		
+		
+		
+		
+		}else if("delete".equals(action)) { //글 삭제
 			System.out.println("boardController->delete");
 			
 			//파라미터 가져오기
@@ -58,6 +76,7 @@ public class BoardController extends HttpServlet {
 			BoardDao boardDao = new BoardDao();
 			boardDao.boardDelete(no);
 			
+			//list로 리다이렉트
 			WebUtil.redirect(request, response, "./board?action=list");
 			
 		}

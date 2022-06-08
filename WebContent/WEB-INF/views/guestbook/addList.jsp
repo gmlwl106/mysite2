@@ -72,7 +72,6 @@
 							
 						</table>
 						<!-- //guestWrite -->
-						<input type="hidden" name="reg_date" value="${gbVo.date }">
 						<input type="hidden" name="action" value="add">
 						
 					</form>	

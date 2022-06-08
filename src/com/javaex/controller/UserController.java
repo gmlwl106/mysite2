@@ -78,18 +78,17 @@ public class UserController extends HttpServlet {
 			String password = request.getParameter("password");
 			
 			UserVo userVo = new UserVo(id, password);
-			System.out.println(userVo);
 			
 			UserDao userDao = new UserDao();
 			UserVo authUser = userDao.getUser(userVo);
 
 
 			if(authUser == null) {
-				System.out.println("로그인 실패");
+				System.out.println("[[로그인 실패]]");
 				//메인 리다이렉트
 				WebUtil.redirect(request, response, "/mysite2/main");
 			} else {
-				System.out.println("로그인 성공");
+				System.out.println("[[로그인 성공]]");
 				
 				//세션
 				HttpSession session = request.getSession();

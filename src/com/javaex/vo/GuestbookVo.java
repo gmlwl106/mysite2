@@ -14,11 +14,10 @@ public class GuestbookVo {
 	//생성자
 	public GuestbookVo() {
 	}
-	public GuestbookVo(String name, String password, String content, String date) {
+	public GuestbookVo(String name, String password, String content) {
 		this.name = name;
 		this.password = password;
 		this.content = content;
-		this.date = date;
 	}
 	public GuestbookVo(int no, String name, String password, String content, String date) {
 		this.no = no;

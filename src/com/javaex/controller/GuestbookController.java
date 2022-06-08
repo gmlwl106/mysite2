@@ -55,11 +55,10 @@ public class GuestbookController extends HttpServlet {
 			String password = request.getParameter("pass");
 			String content = request.getParameter("content");
 			content = content.replace("\r\n","<br>"); //textarea 줄바꿈을 저장하는 코드
-			String date = request.getParameter("reg_date");
 			
 			//guestInsert로 DB에 추가
 			GuestbookDao gbDao = new GuestbookDao();
-			int count  = gbDao.guestInsert(new GuestbookVo(name, password, content, date));
+			int count  = gbDao.guestInsert(new GuestbookVo(name, password, content));
 			System.out.println(count);
 			
 			//리다이렉트 list

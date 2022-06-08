@@ -70,7 +70,7 @@ public class BoardDao {
 			query += "         ,b.title ";
 			query += "         ,b.content ";
 			query += "         ,b.hit ";
-			query += "         ,to_char(b.reg_date,'YYYY-MM-DD HH24:MI') \"reg_date\" ";
+			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') \"reg_date\" ";
 			query += "         ,b.user_no ";
 			query += "         ,u.name ";
 			query += " from board b, users u ";
@@ -101,6 +101,36 @@ public class BoardDao {
 
 		close();
 		return boardList;
+	}
+	
+	
+	//Board 글 쓰기
+	public void boardWrite(BoardVo boardVo) {
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+			query += " insert into board ";
+			query += " values (seq_board_no.nextval, ?, ?, 0, sysdate, ?) ";
+
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContent());
+			pstmt.setInt(3, boardVo.getUser_no());
+			
+
+			int count = pstmt.executeUpdate(); // 쿼리문 실행
+
+			// 4.결과처리
+			System.out.println("[" + count + "건 추가되었습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		close();
 	}
 	
 	

@@ -100,7 +100,7 @@ public class GuestbookDao {
 	}
 	
 	
-	//Guest 추가
+	//Guestbook 추가
 	public int guestInsert(GuestbookVo guestVo) {
 		int count = 0;
 		getConnection();
@@ -133,7 +133,7 @@ public class GuestbookDao {
 	
 	
 	
-	//Guest 찾기
+	//Guestbook 찾기
 	public GuestbookVo getGuest(int delNo) {
 		GuestbookVo guest = null;
 		getConnection();
@@ -176,7 +176,7 @@ public class GuestbookDao {
 	
 	
 	
-	//Guest 삭제
+	//Guestbook 삭제
 	public void guestDelete(int delNo, String delPw) {
 		getConnection();
 		
