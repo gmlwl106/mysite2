@@ -102,4 +102,31 @@ public class BoardDao {
 		close();
 		return boardList;
 	}
+	
+	
+	//Board 글 삭제
+	public void boardDelete(int no) {
+		getConnection();
+		
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
+			String query = "";
+			query += " delete from board ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+			pstmt.setInt(1, no);
+
+			int count = pstmt.executeUpdate();
+
+			// 4.결과처리
+			System.out.println("["+count+"건 삭제 되었습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+	}
 }

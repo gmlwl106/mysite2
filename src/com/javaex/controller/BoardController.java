@@ -25,6 +25,7 @@ public class BoardController extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println(action);
 		
+		
 		if("list".equals(action)) { //게시판 폼
 			System.out.println("boardController->list");
 			
@@ -38,11 +39,27 @@ public class BoardController extends HttpServlet {
 			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
 			
 			
+			
 		} else if("writeForm".equals(action)) { //글쓰기 폼
 			System.out.println("boardController->writeForm");
 			
 			//writeForm으로 리다이렉트
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
+			
+			
+			
+		} else if("delete".equals(action)) { //글 삭제
+			System.out.println("boardController->delete");
+			
+			//파라미터 가져오기
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			//board 삭제
+			BoardDao boardDao = new BoardDao();
+			boardDao.boardDelete(no);
+			
+			WebUtil.redirect(request, response, "./board?action=list");
+			
 		}
 		
 	}
