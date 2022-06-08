@@ -99,6 +99,7 @@ public class BoardController extends HttpServlet {
 			//board 찾기
 			BoardDao boardDao = new BoardDao();
 			BoardVo boardVo = boardDao.getBoard(no);
+			boardVo.setContent(boardVo.getContent().replace("<br>", "\r\n"));
 			
 			//request에 데이터 추가
 			request.setAttribute("boardVo", boardVo);
@@ -114,6 +115,7 @@ public class BoardController extends HttpServlet {
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
+			content = content.replace("\r\n","<br>");
 			
 			BoardVo boardVo = new BoardVo();
 			boardVo.setNo(no);
