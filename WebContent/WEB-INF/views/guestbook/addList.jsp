@@ -2,10 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<!-- 현재 날짜와 시간 -->
-<c:set var="now" value="<%=new java.util.Date() %>" />
-<c:set var="regDate"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
-
 
 <!DOCTYPE html>
 <html>
@@ -76,7 +72,7 @@
 							
 						</table>
 						<!-- //guestWrite -->
-						<input type="hidden" name="reg_date" value="${regDate }">
+						<input type="hidden" name="reg_date" value="${gbVo.date }">
 						<input type="hidden" name="action" value="add">
 						
 					</form>	
