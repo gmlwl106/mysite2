@@ -88,11 +88,11 @@ public class BoardDao {
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				int hit = rs.getInt("hit");
-				String reg_date = rs.getString("reg_date");
-				int user_no = rs.getInt("user_no");
+				String date = rs.getString("reg_date");
+				int userNo = rs.getInt("user_no");
 				String name = rs.getString("name");
 
-				boardList.add(new BoardVo(no, title, content, hit, reg_date, user_no, name));
+				boardList.add(new BoardVo(no, title, content, hit, date, userNo, name));
 			}
 
 		} catch (SQLException e) {
@@ -119,7 +119,7 @@ public class BoardDao {
 
 			pstmt.setString(1, boardVo.getTitle());
 			pstmt.setString(2, boardVo.getContent());
-			pstmt.setInt(3, boardVo.getUser_no());
+			pstmt.setInt(3, boardVo.getUserNo());
 			
 
 			int count = pstmt.executeUpdate(); // 쿼리문 실행
@@ -165,11 +165,11 @@ public class BoardDao {
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				int hit = rs.getInt("hit");
-				String reg_date = rs.getString("reg_date");
-				int user_no = rs.getInt("user_no");
+				String date = rs.getString("reg_date");
+				int userNo = rs.getInt("user_no");
 				String name = rs.getString("name");
 
-				boardVo = new BoardVo(no, title, content, hit, reg_date, user_no, name);
+				boardVo = new BoardVo(no, title, content, hit, date, userNo, name);
 			}
 
 		} catch (SQLException e) {
@@ -204,6 +204,68 @@ public class BoardDao {
 			System.out.println("error:" + e);
 		}
 
+		close();
+	}
+
+	
+	
+	//Board 글 수정
+	public void boardUpdate(BoardVo boardVo) {
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+			query += " update board ";
+			query += " set title = ?, ";
+			query += "     content = ? ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContent());
+			pstmt.setInt(3, boardVo.getNo());
+			
+
+			int count = pstmt.executeUpdate(); // 쿼리문 실행
+
+			// 4.결과처리
+			System.out.println("[" + count + "건 수정 되었습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+		close();
+	}
+
+	//Board 조회수 수정
+	public void boardUpdateHit(BoardVo boardVo) {
+		getConnection();
+
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = ""; // 쿼리문 문자열만들기, ? 주의
+			query += " update board ";
+			query += " set hit = ? ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+
+			pstmt.setInt(1, boardVo.getHit());
+			pstmt.setInt(2, boardVo.getNo());
+			
+
+			int count = pstmt.executeUpdate(); // 쿼리문 실행
+
+			// 4.결과처리
+			System.out.println("[" + count + "건 수정 되었습니다.]");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
 		close();
 	}
 

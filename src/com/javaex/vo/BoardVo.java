@@ -8,7 +8,7 @@ public class BoardVo {
 	private String content;
 	private int hit;
 	private String date;
-	private int user_no;
+	private int userNo;
 	private String name;
 	
 	
@@ -16,20 +16,20 @@ public class BoardVo {
 	//생성자
 	public BoardVo() {
 	}
-	public BoardVo(int no, String title, String content, int hit, String date, int user_no, String name) {
+	public BoardVo(int no, String title, String content, int hit, String date, int userNo, String name) {
 		this.no = no;
 		this.title = title;
 		this.content = content;
 		this.hit = hit;
 		this.date = date;
-		this.user_no = user_no;
+		this.userNo = userNo;
 		this.name = name;
 	}
 	//borderWrite에서 사용
-	public BoardVo(String title, String content, int user_no) {
+	public BoardVo(String title, String content, int userNo) {
 		this.title = title;
 		this.content = content;
-		this.user_no = user_no;
+		this.userNo = userNo;
 	}
 	
 	
@@ -64,11 +64,11 @@ public class BoardVo {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getUser_no() {
-		return user_no;
+	public int getUserNo() {
+		return userNo;
 	}
-	public void setUser_no(int user_no) {
-		this.user_no = user_no;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 	public String getName() {
 		return name;
@@ -82,8 +82,8 @@ public class BoardVo {
 	//메소드 일반
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", hit=" + hit + ", reg_date="
-				+ date + ", user_no=" + user_no + ", name=" + name + "]";
+		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", hit=" + hit + ", date="
+				+ date + ", userNo=" + userNo + ", name=" + name + "]";
 	}
 	
 	

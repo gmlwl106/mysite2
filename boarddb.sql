@@ -13,7 +13,7 @@ create table board (
     reg_date  date    not null,
     user_no   number  not null,
     primary key(no),
-    constraint user_fk foreign key (no)
+    constraint user_fk foreign key (user_no)
     references users(no)
 );
 

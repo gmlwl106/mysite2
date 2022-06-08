@@ -68,7 +68,7 @@
 									<td>${boardVo.name }</td>
 									<td>${boardVo.hit }</td>
 									<td>${boardVo.date }</td>
-									<c:if test="${authUser.no eq boardVo.user_no }">
+									<c:if test="${authUser.no eq boardVo.userNo }">
 										<td><a href="/mysite2/board?action=delete&no=${boardVo.no }">[삭제]</a></td>
 									</c:if>
 								</tr>

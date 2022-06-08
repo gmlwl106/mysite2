@@ -47,6 +47,9 @@ public class UserController extends HttpServlet {
 
 			if(count > 0) {
 				WebUtil.redirect(request, response, "./user?action=joinOk");
+			} else {
+				System.out.println("[[회원가입 실패]]");
+				WebUtil.redirect(request, response, "./main");
 			}
 			
 			

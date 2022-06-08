@@ -75,11 +75,11 @@
 								</span>
 							</div>
 							
-							<c:if test="${authUser.no eq boardVo.user_no }">
-								<a id="btn_modify" href="">수정</a>
+							<c:if test="${authUser.no eq boardVo.userNo }">
+								<a id="btn_modify" href="/mysite2/board?action=modifyForm&no=${boardVo.no }">수정</a>
 							</c:if>
 							
-							<a id="btn_modify" href="">목록</a>
+							<a id="btn_modify" href="/mysite2/board?action=list">목록</a>
 							
 						</form>
 						<!-- //form -->
