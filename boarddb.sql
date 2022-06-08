@@ -30,12 +30,15 @@ values (seq_board_no.nextval, '제목', '글글글', 1, sysdate, 1);
 
 
 --board 출력
-select  no  
-        ,title
-        ,content
-        ,hit
-        ,to_char(reg_date,'YYYY-MM-DD')
-        ,user_no
-from board;
+select  b.no  
+        ,b.title
+        ,b.content
+        ,b.hit
+        ,to_char(b.reg_date,'YY-MM-DD HH24:MI') "reg_date"
+        ,b.user_no
+        ,u.name
+from board b, users u
+where b.user_no = u.no
+order by no desc;
 
 commit;

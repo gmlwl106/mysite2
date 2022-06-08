@@ -63,6 +63,25 @@ public class BoardController extends HttpServlet {
 			//list로 리다이렉트
 			WebUtil.redirect(request, response, "./board?action=list");
 		
+			
+			
+		} else if("read".equals(action)) { //글 보기
+			System.out.println("boardController->read");
+			
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			//board 찾기
+			BoardDao boardDao = new BoardDao();
+			BoardVo boardVo = boardDao.getBoard(no);
+			
+			//조회수 늘어나는 로직 추가해야함
+			
+			//request에 데이터 추가
+			request.setAttribute("boardVo", boardVo);
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
+			
+			
 		
 		
 		

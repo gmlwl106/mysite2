@@ -64,10 +64,10 @@
 								<c:forEach items="${boardList }" var="boardVo">
 									<tr>
 									<td>${boardVo.no }</td>
-									<td class="text-left"><a href="#">${boardVo.title }</a></td>
+									<td class="text-left"><a href="/mysite2/board?action=read&no=${boardVo.no }">${boardVo.title }</a></td>
 									<td>${boardVo.name }</td>
 									<td>${boardVo.hit }</td>
-									<td>${boardVo.reg_date }</td>
+									<td>${boardVo.date }</td>
 									<c:if test="${authUser.no eq boardVo.user_no }">
 										<td><a href="/mysite2/board?action=delete&no=${boardVo.no }">[삭제]</a></td>
 									</c:if>
