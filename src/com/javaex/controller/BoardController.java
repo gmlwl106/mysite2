@@ -31,18 +31,12 @@ public class BoardController extends HttpServlet {
 		if("list".equals(action)) { //게시판 폼
 			System.out.println("boardController->list");
 			
+			//(keyword가 있을때) 파라미터 가져옴
 			String keyword = request.getParameter("keyword");
 			
 			//boardList 데이터 가져오기
 			BoardDao boardDao = new BoardDao();
-			
-			List<BoardVo> boardList = null;
-			
-			if(keyword == null) {
-				boardList = boardDao.getBoardList("");
-			} else {
-				boardList = boardDao.getBoardList(keyword);
-			}
+			List<BoardVo> boardList = boardDao.getBoardList(keyword);
 			
 			//request에 데이터 추가
 			request.setAttribute("boardList", boardList);
@@ -152,7 +146,6 @@ public class BoardController extends HttpServlet {
 			//list로 리다이렉트
 			WebUtil.redirect(request, response, "./board?action=list");
 
-		
 			
 			
 		} else {

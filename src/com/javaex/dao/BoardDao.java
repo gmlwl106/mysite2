@@ -89,7 +89,6 @@ public class BoardDao {
 			} else {
 				query += " where title like ? ";
 	
-	
 				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 				pstmt.setString(1, '%'+keyword+'%');
 			}
