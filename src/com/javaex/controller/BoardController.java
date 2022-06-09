@@ -143,6 +143,23 @@ public class BoardController extends HttpServlet {
 			//list로 리다이렉트
 			WebUtil.redirect(request, response, "./board?action=list");
 			
+			
+			
+		} else if("search".equals(action)) { //글 검색
+			System.out.println("boardController->search");
+			
+			//파라미터 가져오기
+			String keyword = request.getParameter("keyword");
+			
+			BoardDao boardDao = new BoardDao();
+			List<BoardVo> boardList = boardDao.getBoardList(keyword);
+			
+			request.setAttribute("boardList", boardList);
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
+			
+			
+			
 		} else {
 			System.out.println("action 파라미터 없음");
 			WebUtil.redirect(request, response, "./board?action=list");

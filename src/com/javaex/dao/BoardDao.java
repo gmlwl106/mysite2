@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
-
 import com.javaex.vo.BoardVo;
 
 public class BoardDao {
@@ -58,7 +56,7 @@ public class BoardDao {
 	}
 	
 	
-	//Board list 출력
+	//Board list 전체 출력
 	public List<BoardVo> getBoardList() {
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
@@ -72,7 +70,7 @@ public class BoardDao {
 			query += "         ,b.title ";
 			query += "         ,b.content ";
 			query += "         ,b.hit ";
-			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') \"reg_date\" ";
+			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') reg_date ";
 			query += "         ,b.user_no ";
 			query += "         ,u.name ";
 			query += " from board b, users u ";
@@ -81,6 +79,70 @@ public class BoardDao {
 
 
 			pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+
+			rs = pstmt.executeQuery();
+
+			// 4.결과처리
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int hit = rs.getInt("hit");
+				String date = rs.getString("reg_date");
+				int userNo = rs.getInt("user_no");
+				String name = rs.getString("name");
+
+				boardList.add(new BoardVo(no, title, content, hit, date, userNo, name));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+		return boardList;
+	}
+	
+	
+	//Board 글 검색
+	public List<BoardVo> getBoardList(String keyword) {
+		
+		List<BoardVo> boardList = new ArrayList<BoardVo>();
+		getConnection();
+		
+		try {
+
+			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
+			String query = "";
+			query += " select  no ";
+			query += "         ,title ";
+			query += "         ,content ";
+			query += "         ,hit ";
+			query += "         ,reg_date ";
+			query += "         ,user_no ";
+			query += "         ,name ";
+			query += " from (select  b.no ";
+			query += "                 ,b.title ";
+			query += "                 ,b.content ";
+			query += "                 ,b.hit ";
+			query += "                 ,to_char(b.reg_date,'YY-MM-DD HH24:MI') reg_date ";
+			query += "                 ,b.user_no ";
+			query += "                 ,u.name ";
+			query += "         from board b, users u ";
+			query += "         where b.user_no = u.no ";
+			query += "         order by no desc) ";
+			
+			if(keyword == null) {
+				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+			} else {
+				query += " where title like ? ";
+				query += " or name like ? ";
+	
+	
+				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
+				pstmt.setString(1, '%'+keyword+'%');
+				pstmt.setString(2, '%'+keyword+'%');
+			}
 
 			rs = pstmt.executeQuery();
 
@@ -149,7 +211,7 @@ public class BoardDao {
 			query += "         ,b.title ";
 			query += "         ,b.content ";
 			query += "         ,b.hit ";
-			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') \"reg_date\" ";
+			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') reg_date ";
 			query += "         ,b.user_no ";
 			query += "         ,u.name ";
 			query += " from board b, users u ";
