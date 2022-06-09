@@ -133,6 +133,7 @@ public class BoardDao {
 			query += "         order by no desc) ";
 			
 			if(keyword == null) {
+				System.out.println("검색키워드 null");
 				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 			} else {
 				query += " where title like ? ";
