@@ -65,30 +65,23 @@ public class BoardDao {
 
 			// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
 			String query = "";
-			query += " select  no ";
-			query += "         ,title ";
-			query += "         ,content ";
-			query += "         ,hit ";
-			query += "         ,reg_date ";
-			query += "         ,user_no ";
-			query += "         ,name ";
-			query += " from (select  b.no ";
-			query += "                 ,b.title ";
-			query += "                 ,b.content ";
-			query += "                 ,b.hit ";
-			query += "                 ,to_char(b.reg_date,'YY-MM-DD HH24:MI') reg_date ";
-			query += "                 ,b.user_no ";
-			query += "                 ,u.name ";
-			query += "         from board b, users u ";
-			query += "         where b.user_no = u.no ";
-			query += "         order by no desc) ";
+			query += " select  b.no ";
+			query += "         ,b.title ";
+			query += "         ,b.content ";
+			query += "         ,b.hit ";
+			query += "         ,to_char(b.reg_date,'YY-MM-DD HH24:MI') reg_date ";
+			query += "         ,b.user_no ";
+			query += "         ,u.name ";
+			query += " from board b, users u ";
+			query += " where b.user_no = u.no ";
 			
 			if(keyword == null) {
 				System.out.println("검색키워드 null");
+				query += " order by no desc ";
 				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 			} else {
-				query += " where title like ? ";
-	
+				query += " and title like ? ";
+				query += " order by no desc ";
 				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 				pstmt.setString(1, '%'+keyword+'%');
 			}
