@@ -55,13 +55,7 @@ public class BoardDao {
 		}
 	}
 	
-	
-	//Board list 전체 출력
-	public List<BoardVo> getBoardList() {
-		return getBoardList("");
-	}
-	
-	//Board 검색
+	//Board list 출력 + 검색
 	public List<BoardVo> getBoardList(String keyword) {
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();

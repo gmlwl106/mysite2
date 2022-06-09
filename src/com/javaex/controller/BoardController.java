@@ -31,9 +31,18 @@ public class BoardController extends HttpServlet {
 		if("list".equals(action)) { //게시판 폼
 			System.out.println("boardController->list");
 			
+			String keyword = request.getParameter("keyword");
+			
 			//boardList 데이터 가져오기
 			BoardDao boardDao = new BoardDao();
-			List<BoardVo> boardList = boardDao.getBoardList();
+			
+			List<BoardVo> boardList = null;
+			
+			if(keyword == null) {
+				boardList = boardDao.getBoardList("");
+			} else {
+				boardList = boardDao.getBoardList(keyword);
+			}
 			
 			//request에 데이터 추가
 			request.setAttribute("boardList", boardList);
@@ -142,22 +151,8 @@ public class BoardController extends HttpServlet {
 			
 			//list로 리다이렉트
 			WebUtil.redirect(request, response, "./board?action=list");
-			
-			
-			
-		} else if("search".equals(action)) { //글 검색
-			System.out.println("boardController->search");
-			
-			//파라미터 가져오기
-			String keyword = request.getParameter("keyword");
-			
-			BoardDao boardDao = new BoardDao();
-			List<BoardVo> boardList = boardDao.getBoardList(keyword);
-			
-			request.setAttribute("boardList", boardList);
-			
-			WebUtil.forward(request, response, "/WEB-INF/views/board/list.jsp");
-			
+
+		
 			
 			
 		} else {
