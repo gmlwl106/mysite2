@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+
 import com.javaex.vo.BoardVo;
 
 public class BoardDao {
@@ -241,7 +243,8 @@ public class BoardDao {
 	}
 
 	//Board 조회수 수정
-	public void boardUpdateHit(BoardVo boardVo) {
+	public void hitUpdate(BoardVo boardVo) {
+		
 		getConnection();
 
 		try {

@@ -82,7 +82,7 @@ public class BoardController extends HttpServlet {
 			
 			//조회수 늘어나는 로직
 			boardVo.setHit(boardVo.getHit()+1);
-			boardDao.boardUpdateHit(boardVo);
+			boardDao.hitUpdate(boardVo);
 			
 			//request에 데이터 추가
 			request.setAttribute("boardVo", boardVo);
