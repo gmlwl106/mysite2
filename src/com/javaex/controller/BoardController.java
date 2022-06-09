@@ -79,13 +79,13 @@ public class BoardController extends HttpServlet {
 			
 			int no = Integer.parseInt(request.getParameter("no"));
 			
-			//board 찾기
 			BoardDao boardDao = new BoardDao();
-			BoardVo boardVo = boardDao.getBoard(no);
 			
 			//조회수 늘어나는 로직
-			boardVo.setHit(boardVo.getHit()+1);
-			boardDao.hitUpdate(boardVo);
+			boardDao.hitUpdate(no);
+			
+			//board 찾기
+			BoardVo boardVo = boardDao.getBoard(no);
 			
 			//request에 데이터 추가
 			request.setAttribute("boardVo", boardVo);
